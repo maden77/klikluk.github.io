@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tebak Angka Dadu</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tebak Dadu Bergambar</title>
   <style>
     body {
       font-family: sans-serif;
       text-align: center;
-      background: #f0f8ff;
+      background-color: #eef2f3;
       padding: 20px;
     }
     h1 {
@@ -24,6 +24,15 @@
       margin-top: 20px;
       font-weight: bold;
     }
+    #dadu {
+      width: 100px;
+      height: 100px;
+      margin: 20px auto;
+    }
+    #dadu img {
+      width: 100%;
+      height: auto;
+    }
   </style>
 </head>
 <body>
@@ -35,27 +44,54 @@
   <br>
   <button onclick="lemparDadu()">Lempar Dadu</button>
 
+  <div id="dadu">
+    <img id="gambarDadu" src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Alea_1.png" alt="Dadu">
+  </div>
+
   <div id="hasil"></div>
 
   <script>
+    const gambarDadu = document.getElementById("gambarDadu");
+    const hasilDiv = document.getElementById("hasil");
+    const daduImages = [
+      "https://upload.wikimedia.org/wikipedia/commons/2/2c/Alea_1.png",
+      "https://upload.wikimedia.org/wikipedia/commons/b/b8/Alea_2.png",
+      "https://upload.wikimedia.org/wikipedia/commons/2/2f/Alea_3.png",
+      "https://upload.wikimedia.org/wikipedia/commons/8/8d/Alea_4.png",
+      "https://upload.wikimedia.org/wikipedia/commons/5/55/Alea_5.png",
+      "https://upload.wikimedia.org/wikipedia/commons/f/f4/Alea_6.png"
+    ];
+
     function lemparDadu() {
       const tebakan = parseInt(document.getElementById("tebakan").value);
-      const hasilDadu = Math.floor(Math.random() * 6) + 1;
-      const hasilDiv = document.getElementById("hasil");
-
       if (isNaN(tebakan) || tebakan < 1 || tebakan > 6) {
         hasilDiv.textContent = "⚠️ Masukkan angka antara 1 dan 6.";
         hasilDiv.style.color = "orange";
         return;
       }
 
-      if (tebakan === hasilDadu) {
-        hasilDiv.textContent = `🎉 Selamat! Dadu menunjukkan ${hasilDadu}. Tebakan kamu benar!`;
-        hasilDiv.style.color = "green";
-      } else {
-        hasilDiv.textContent = `❌ Sayang sekali, dadu menunjukkan ${hasilDadu}. Tebakan kamu ${tebakan}.`;
-        hasilDiv.style.color = "red";
-      }
+      hasilDiv.textContent = "🎲 Mengocok dadu...";
+      hasilDiv.style.color = "black";
+
+      let putaran = 0;
+      const interval = setInterval(() => {
+        const acak = Math.floor(Math.random() * 6);
+        gambarDadu.src = daduImages[acak];
+        putaran++;
+        if (putaran >= 10) {
+          clearInterval(interval);
+          const hasil = Math.floor(Math.random() * 6) + 1;
+          gambarDadu.src = daduImages[hasil - 1];
+
+          if (hasil === tebakan) {
+            hasilDiv.textContent = `🎉 Selamat! Dadu menunjukkan ${hasil}. Tebakan kamu benar!`;
+            hasilDiv.style.color = "green";
+          } else {
+            hasilDiv.textContent = `❌ Sayang, dadu menunjukkan ${hasil}. Tebakan kamu ${tebakan}.`;
+            hasilDiv.style.color = "red";
+          }
+        }
+      }, 100);
     }
   </script>
 
