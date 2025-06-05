@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tebak Angka Dadu</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background: #f0f8ff;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+    }
+    input, button {
+      font-size: 18px;
+      padding: 10px;
+      margin: 10px;
+    }
+    #hasil {
+      font-size: 20px;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎲 Tebak Angka Dadu</h1>
+  <p>Masukkan angka dari <strong>1 sampai 6</strong>, lalu tekan "Lempar Dadu"</p>
+
+  <input type="number" id="tebakan" min="1" max="6" placeholder="Tebakan kamu">
+  <br>
+  <button onclick="lemparDadu()">Lempar Dadu</button>
+
+  <div id="hasil"></div>
+
+  <script>
+    function lemparDadu() {
+      const tebakan = parseInt(document.getElementById("tebakan").value);
+      const hasilDadu = Math.floor(Math.random() * 6) + 1;
+      const hasilDiv = document.getElementById("hasil");
+
+      if (isNaN(tebakan) || tebakan < 1 || tebakan > 6) {
+        hasilDiv.textContent = "⚠️ Masukkan angka antara 1 dan 6.";
+        hasilDiv.style.color = "orange";
+        return;
+      }
+
+      if (tebakan === hasilDadu) {
+        hasilDiv.textContent = `🎉 Selamat! Dadu menunjukkan ${hasilDadu}. Tebakan kamu benar!`;
+        hasilDiv.style.color = "green";
+      } else {
+        hasilDiv.textContent = `❌ Sayang sekali, dadu menunjukkan ${hasilDadu}. Tebakan kamu ${tebakan}.`;
+        hasilDiv.style.color = "red";
+      }
+    }
+  </script>
+
+</body>
+</html>
