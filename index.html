@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RPG Sederhana</title>
+  <title>RPG Petualangan Hutan</title>
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -34,56 +34,82 @@
     }
     
     #map {
-      background-color: #111;
+      background-color: #1a2f1a;
       height: 400px;
       border-radius: 5px;
       position: relative;
       overflow: hidden;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231a2f1a"/><circle cx="20" cy="30" r="5" fill="%233d5a3d"/><circle cx="50" cy="20" r="5" fill="%233d5a3d"/><circle cx="80" cy="35" r="5" fill="%233d5a3d"/><circle cx="30" cy="60" r="5" fill="%233d5a3d"/><circle cx="70" cy="55" r="5" fill="%233d5a3d"/><circle cx="40" cy="80" r="5" fill="%233d5a3d"/><circle cx="85" cy="75" r="5" fill="%233d5a3d"/></svg>');
+      background-size: 100px 100px;
     }
     
     #player {
-      width: 30px;
-      height: 30px;
-      background-color: #4CAF50;
-      border-radius: 50%;
+      width: 40px;
+      height: 60px;
       position: absolute;
       transition: all 0.3s ease;
       z-index: 10;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="60" viewBox="0 0 40 60"><circle cx="20" cy="15" r="10" fill="%23ffdbac"/><rect x="10" y="25" width="20" height="25" fill="%23336699"/><rect x="15" y="50" width="10" height="10" fill="%23552d00"/><rect x="5" y="30" width="8" height="20" fill="%23336699"/><rect x="27" y="30" width="8" height="20" fill="%23336699"/></svg>');
+      background-repeat: no-repeat;
     }
     
     .enemy {
-      width: 25px;
-      height: 25px;
-      background-color: #F44336;
-      border-radius: 50%;
+      width: 40px;
+      height: 60px;
       position: absolute;
       z-index: 5;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="60" viewBox="0 0 40 60"><circle cx="20" cy="15" r="10" fill="%23ff9999"/><rect x="10" y="25" width="20" height="25" fill="%23993333"/><rect x="15" y="50" width="10" height="10" fill="%23552d00"/><rect x="5" y="30" width="8" height="20" fill="%23993333"/><rect x="27" y="30" width="8" height="20" fill="%23993333"/></svg>');
+      background-repeat: no-repeat;
     }
     
     .item {
-      width: 20px;
-      height: 20px;
-      background-color: #FFC107;
-      border-radius: 50%;
+      width: 30px;
+      height: 30px;
       position: absolute;
       z-index: 3;
     }
     
+    .potion {
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><rect x="10" y="5" width="10" height="5" fill="%23ff0000"/><path d="M10,10 L10,25 C10,27 20,27 20,25 L20,10 Z" fill="%23ff0000"/></svg>');
+    }
+    
+    .mana-potion {
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><rect x="10" y="5" width="10" height="5" fill="%230066ff"/><path d="M10,10 L10,25 C10,27 20,27 20,25 L20,10 Z" fill="%230066ff"/></svg>');
+    }
+    
     .obstacle {
-      background-color: #795548;
+      background-color: #5a3d1a;
       position: absolute;
       z-index: 2;
+      border: 2px solid #3d2a0f;
+    }
+    
+    .tree {
+      width: 50px;
+      height: 80px;
+      position: absolute;
+      z-index: 2;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="50" height="80" viewBox="0 0 50 80"><rect x="20" y="50" width="10" height="30" fill="%235a3d1a"/><circle cx="25" cy="30" r="20" fill="%231a5a1a"/></svg>');
+    }
+    
+    .rock {
+      width: 40px;
+      height: 30px;
+      position: absolute;
+      z-index: 2;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="30" viewBox="0 0 40 30"><ellipse cx="20" cy="15" rx="18" ry="12" fill="%23666666"/></svg>');
     }
     
     #stats {
-      background-color: #444;
+      background-color: #2a3d2a;
       padding: 15px;
       border-radius: 5px;
+      border: 2px solid #1a2f1a;
     }
     
     .stat-bar {
       height: 20px;
-      background-color: #555;
+      background-color: #1a2f1a;
       border-radius: 10px;
       margin-bottom: 10px;
       overflow: hidden;
@@ -95,22 +121,26 @@
     }
     
     #health .stat-fill {
-      background-color: #F44336;
+      background-color: #ff3333;
       width: 100%;
     }
     
     #mana .stat-fill {
-      background-color: #2196F3;
+      background-color: #3399ff;
       width: 80%;
     }
     
     #exp .stat-fill {
-      background-color: #4CAF50;
+      background-color: #ffcc00;
       width: 30%;
     }
     
     #inventory {
       margin-top: 20px;
+      background-color: #2a3d2a;
+      padding: 10px;
+      border-radius: 5px;
+      border: 2px solid #1a2f1a;
     }
     
     #inventory-items {
@@ -122,12 +152,13 @@
     .inventory-item {
       width: 40px;
       height: 40px;
-      background-color: #555;
+      background-color: #1a2f1a;
       border-radius: 5px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      border: 1px solid #3d5a3d;
     }
     
     #controls {
@@ -139,16 +170,17 @@
     
     button {
       padding: 10px;
-      background-color: #4CAF50;
+      background-color: #3d5a3d;
       border: none;
       border-radius: 5px;
       color: white;
       cursor: pointer;
       font-weight: bold;
+      border: 1px solid #1a2f1a;
     }
     
     button:hover {
-      background-color: #45a049;
+      background-color: #2a3d2a;
     }
     
     #action-buttons {
@@ -162,29 +194,30 @@
     }
     
     #attack {
-      background-color: #F44336;
+      background-color: #993333;
     }
     
     #attack:hover {
-      background-color: #d32f2f;
+      background-color: #802020;
     }
     
     #use-item {
-      background-color: #FFC107;
+      background-color: #ffcc00;
       color: #333;
     }
     
     #use-item:hover {
-      background-color: #ffb300;
+      background-color: #e6b800;
     }
     
     #message-log {
       margin-top: 20px;
       height: 100px;
       overflow-y: auto;
-      background-color: #111;
+      background-color: #1a2f1a;
       padding: 10px;
       border-radius: 5px;
+      border: 1px solid #3d5a3d;
     }
     
     .message {
@@ -194,15 +227,15 @@
     }
     
     .info {
-      background-color: rgba(33, 150, 243, 0.2);
+      background-color: rgba(51, 153, 255, 0.2);
     }
     
     .damage {
-      background-color: rgba(244, 67, 54, 0.2);
+      background-color: rgba(255, 51, 51, 0.2);
     }
     
     .heal {
-      background-color: rgba(76, 175, 80, 0.2);
+      background-color: rgba(51, 204, 51, 0.2);
     }
     
     #game-over {
@@ -220,7 +253,7 @@
     }
     
     #game-over h2 {
-      color: #F44336;
+      color: #ff3333;
       font-size: 3em;
       margin-bottom: 20px;
     }
@@ -237,7 +270,7 @@
   </style>
 </head>
 <body>
-  <h1>RPG Sederhana</h1>
+  <h1>Petualangan di Hutan</h1>
   
   <div id="game-container">
     <div id="game-screen">
@@ -249,7 +282,7 @@
       <div id="stats">
         <h2>Status</h2>
         <div>
-          <h3>Pemain</h3>
+          <h3>Petualang</h3>
           <p>Level: <span id="player-level">1</span></p>
           
           <div class="stat-bar" id="health">
@@ -292,7 +325,7 @@
     </div>
     
     <div id="message-log">
-      <div class="message info">Selamat datang di RPG Sederhana!</div>
+      <div class="message info">Selamat datang di Petualangan Hutan!</div>
       <div class="message info">Gunakan tombol arah untuk bergerak.</div>
     </div>
   </div>
@@ -325,10 +358,12 @@
       enemies: [],
       items: [],
       obstacles: [],
+      trees: [],
+      rocks: [],
       gameOver: false,
       currentEnemy: null,
       messages: [
-        { text: 'Selamat datang di RPG Sederhana!', type: 'info' },
+        { text: 'Selamat datang di Petualangan Hutan!', type: 'info' },
         { text: 'Gunakan tombol arah untuk bergerak.', type: 'info' }
       ]
     };
@@ -358,12 +393,17 @@
       gameState.gameOver = false;
       gameState.currentEnemy = null;
       
-      // Clear existing enemies and items
+      // Clear existing elements
       gameState.enemies = [];
       gameState.items = [];
+      gameState.obstacles = [];
+      gameState.trees = [];
+      gameState.rocks = [];
       
-      // Create obstacles
-      createObstacles();
+      document.querySelectorAll('.enemy, .item, .obstacle, .tree, .rock').forEach(el => el.remove());
+      
+      // Create environment
+      createEnvironment();
       
       // Create enemies
       for (let i = 0; i < 5; i++) {
@@ -387,55 +427,73 @@
       gameOverScreen.style.display = 'none';
       
       // Add initial messages
-      addMessage('Petualangan baru dimulai!', 'info');
+      addMessage('Petualangan baru dimulai di hutan yang lebat!', 'info');
     }
 
-    // Create obstacles
-    function createObstacles() {
-      // Contoh obstacle (dinding di sekitar map)
+    // Create environment
+    function createEnvironment() {
       const mapWidth = mapElement.offsetWidth;
       const mapHeight = mapElement.offsetHeight;
       
-      // Atas
+      // Create border obstacles
       gameState.obstacles.push({ x: 0, y: 0, width: mapWidth, height: 20 });
-      
-      // Bawah
       gameState.obstacles.push({ x: 0, y: mapHeight - 20, width: mapWidth, height: 20 });
-      
-      // Kiri
       gameState.obstacles.push({ x: 0, y: 0, width: 20, height: mapHeight });
-      
-      // Kanan
       gameState.obstacles.push({ x: mapWidth - 20, y: 0, width: 20, height: mapHeight });
       
-      // Beberapa obstacle acak
-      for (let i = 0; i < 10; i++) {
-        const width = Math.random() * 50 + 20;
-        const height = Math.random() * 50 + 20;
-        const x = Math.random() * (mapWidth - width - 40) + 20;
-        const y = Math.random() * (mapHeight - height - 40) + 20;
+      // Create trees
+      for (let i = 0; i < 15; i++) {
+        const tree = {
+          x: Math.random() * (mapWidth - 60) + 10,
+          y: Math.random() * (mapHeight - 100) + 10,
+          width: 50,
+          height: 80
+        };
         
-        gameState.obstacles.push({ x, y, width, height });
+        // Pastikan tidak spawn di dekat player
+        if (Math.abs(tree.x - gameState.player.x) > 100 || Math.abs(tree.y - gameState.player.y) > 100) {
+          gameState.trees.push(tree);
+          gameState.obstacles.push(tree); // Tree juga sebagai obstacle
+        }
       }
       
-      // Render obstacles
-      renderObstacles();
+      // Create rocks
+      for (let i = 0; i < 10; i++) {
+        const rock = {
+          x: Math.random() * (mapWidth - 50) + 10,
+          y: Math.random() * (mapHeight - 40) + 10,
+          width: 40,
+          height: 30
+        };
+        
+        if (Math.abs(rock.x - gameState.player.x) > 100 || Math.abs(rock.y - gameState.player.y) > 100) {
+          gameState.rocks.push(rock);
+          gameState.obstacles.push(rock);
+        }
+      }
+      
+      // Render environment
+      renderEnvironment();
     }
 
-    // Render obstacles
-    function renderObstacles() {
-      // Hapus obstacle yang ada
-      document.querySelectorAll('.obstacle').forEach(el => el.remove());
+    // Render environment
+    function renderEnvironment() {
+      // Render trees
+      gameState.trees.forEach(tree => {
+        const treeElement = document.createElement('div');
+        treeElement.className = 'tree';
+        treeElement.style.left = `${tree.x}px`;
+        treeElement.style.top = `${tree.y}px`;
+        mapElement.appendChild(treeElement);
+      });
       
-      // Buat obstacle baru
-      gameState.obstacles.forEach(obstacle => {
-        const obstacleElement = document.createElement('div');
-        obstacleElement.className = 'obstacle';
-        obstacleElement.style.left = `${obstacle.x}px`;
-        obstacleElement.style.top = `${obstacle.y}px`;
-        obstacleElement.style.width = `${obstacle.width}px`;
-        obstacleElement.style.height = `${obstacle.height}px`;
-        mapElement.appendChild(obstacleElement);
+      // Render rocks
+      gameState.rocks.forEach(rock => {
+        const rockElement = document.createElement('div');
+        rockElement.className = 'rock';
+        rockElement.style.left = `${rock.x}px`;
+        rockElement.style.top = `${rock.y}px`;
+        mapElement.appendChild(rockElement);
       });
     }
 
@@ -447,8 +505,8 @@
       // Pastikan musuh tidak muncul di dekat player
       let x, y;
       do {
-        x = Math.random() * (mapWidth - 40) + 20;
-        y = Math.random() * (mapHeight - 40) + 20;
+        x = Math.random() * (mapWidth - 60) + 20;
+        y = Math.random() * (mapHeight - 80) + 20;
       } while (Math.abs(x - gameState.player.x) < 100 && Math.abs(y - gameState.player.y) < 100);
       
       const level = Math.floor(Math.random() * 3) + 1;
@@ -477,10 +535,7 @@
       enemyElement.id = enemy.id;
       enemyElement.style.left = `${enemy.x}px`;
       enemyElement.style.top = `${enemy.y}px`;
-      
-      // Tambahkan tooltip dengan info musuh
       enemyElement.title = `Musuh Level ${enemy.level}\nHP: ${enemy.hp}/${enemy.maxHp}`;
-      
       mapElement.appendChild(enemyElement);
     }
 
@@ -506,12 +561,11 @@
     // Render item
     function renderItem(item) {
       const itemElement = document.createElement('div');
-      itemElement.className = 'item';
+      itemElement.className = `item ${item.type}`;
       itemElement.id = item.id;
       itemElement.style.left = `${item.x}px`;
       itemElement.style.top = `${item.y}px`;
       
-      // Tambahkan tooltip
       if (item.type === 'potion') {
         itemElement.title = 'Potion (Restore 20 HP)';
       } else if (item.type === 'mana-potion') {
@@ -535,17 +589,19 @@
 
     // Check enemy collision
     function checkEnemyCollision() {
-      const playerSize = 30;
-      const enemySize = 25;
+      const playerWidth = 40;
+      const playerHeight = 60;
+      const enemyWidth = 40;
+      const enemyHeight = 60;
       
       for (let i = 0; i < gameState.enemies.length; i++) {
         const enemy = gameState.enemies[i];
         
         if (
-          gameState.player.x < enemy.x + enemySize &&
-          gameState.player.x + playerSize > enemy.x &&
-          gameState.player.y < enemy.y + enemySize &&
-          gameState.player.y + playerSize > enemy.y
+          gameState.player.x < enemy.x + enemyWidth &&
+          gameState.player.x + playerWidth > enemy.x &&
+          gameState.player.y < enemy.y + enemyHeight &&
+          gameState.player.y + playerHeight > enemy.y
         ) {
           // Player bertemu musuh
           gameState.currentEnemy = enemy;
@@ -560,17 +616,18 @@
 
     // Check item collision
     function checkItemCollision() {
-      const playerSize = 30;
-      const itemSize = 20;
+      const playerWidth = 40;
+      const playerHeight = 60;
+      const itemSize = 30;
       
       for (let i = 0; i < gameState.items.length; i++) {
         const item = gameState.items[i];
         
         if (
           gameState.player.x < item.x + itemSize &&
-          gameState.player.x + playerSize > item.x &&
+          gameState.player.x + playerWidth > item.x &&
           gameState.player.y < item.y + itemSize &&
-          gameState.player.y + playerSize > item.y
+          gameState.player.y + playerHeight > item.y
         ) {
           // Player mengambil item
           pickUpItem(item);
@@ -624,114 +681,4 @@
       manaText.textContent = `${gameState.player.mana}/${gameState.player.maxMana}`;
       
       // Update EXP
-      const expPercent = (gameState.player.exp / gameState.player.nextLevelExp) * 100;
-      expFill.style.width = `${expPercent}%`;
-      expText.textContent = `${gameState.player.exp}/${gameState.player.nextLevelExp}`;
-      
-      // Update level
-      playerLevel.textContent = gameState.player.level;
-    }
-
-    // Update inventory display
-    function updateInventory() {
-      inventoryItems.innerHTML = '';
-      
-      gameState.player.inventory.forEach(item => {
-        const itemElement = document.createElement('div');
-        itemElement.className = 'inventory-item';
-        itemElement.textContent = item.id === 'potion' ? 'P' : 'MP';
-        itemElement.title = `${item.name} (${item.quantity})`;
-        
-        itemElement.addEventListener('click', () => useItem(item));
-        
-        inventoryItems.appendChild(itemElement);
-      });
-    }
-
-    // Use item
-    function useItem(item) {
-      if (item.quantity <= 0) return;
-      
-      if (item.id === 'potion') {
-        gameState.player.hp = Math.min(gameState.player.hp + item.effect.hp, gameState.player.maxHp);
-        addMessage(`Anda menggunakan Potion! Pulihkan ${item.effect.hp} HP.`, 'heal');
-      } else if (item.id === 'mana-potion') {
-        gameState.player.mana = Math.min(gameState.player.mana + item.effect.mana, gameState.player.maxMana);
-        addMessage(`Anda menggunakan Mana Potion! Pulihkan ${item.effect.mana} Mana.`, 'heal');
-      }
-      
-      item.quantity--;
-      if (item.quantity <= 0) {
-        gameState.player.inventory = gameState.player.inventory.filter(i => i.id !== item.id);
-      }
-      
-      updateStats();
-      updateInventory();
-    }
-
-    // Attack enemy
-    function attackEnemy() {
-      if (!gameState.currentEnemy) {
-        addMessage('Tidak ada musuh di dekatmu!', 'info');
-        return;
-      }
-      
-      const enemy = gameState.currentEnemy;
-      
-      // Hitung damage player ke musuh
-      const playerDamage = Math.max(1, gameState.player.attack - enemy.defense / 2);
-      enemy.hp -= playerDamage;
-      
-      addMessage(`Anda menyerang musuh dan memberikan ${playerDamage} damage!`, 'damage');
-      
-      // Update enemy HP display
-      const enemyElement = document.getElementById(enemy.id);
-      if (enemyElement) {
-        enemyElement.title = `Musuh Level ${enemy.level}\nHP: ${Math.max(0, enemy.hp)}/${enemy.maxHp}`;
-      }
-      
-      // Cek jika musuh mati
-      if (enemy.hp <= 0) {
-        addMessage(`Anda mengalahkan musuh level ${enemy.level}! Mendapatkan ${enemy.exp} EXP.`, 'info');
-        
-        // Beri EXP ke player
-        gameState.player.exp += enemy.exp;
-        
-        // Cek level up
-        checkLevelUp();
-        
-        // Hapus musuh
-        document.getElementById(enemy.id)?.remove();
-        gameState.enemies = gameState.enemies.filter(e => e.id !== enemy.id);
-        gameState.currentEnemy = null;
-        
-        // Buat musuh baru
-        if (gameState.enemies.length < 3) {
-          createEnemy();
-        }
-        
-        updateStats();
-        return;
-      }
-      
-      // Musuh menyerang balik
-      const enemyDamage = Math.max(1, enemy.attack - gameState.player.defense / 2);
-      gameState.player.hp -= enemyDamage;
-      
-      addMessage(`Musuh menyerang balik dan memberikan ${enemyDamage} damage!`, 'damage');
-      
-      // Update player stats
-      updateStats();
-      
-      // Cek game over
-      if (gameState.player.hp <= 0) {
-        gameOver();
-      }
-    }
-
-    // Check level up
-    function checkLevelUp() {
-      if (gameState.player.exp >= gameState.player.nextLevelExp) {
-        gameState.player.level++;
-        gameState.player.exp -= gameState.player.nextLevelExp;
-        gameState.player.nextLevelExp = Math.floor(gameState.player.nextLevel
+    
