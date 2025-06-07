@@ -2,681 +2,110 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <title>NeonWeb3 - Lightweight Web3 Browser</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Battle Arena - MOBA Sederhana</title>
+  <meta name="theme-color" content="#1a1a2e">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="icon-192.png" type="image/png">
   <style>
     body {
+      font-family: 'Segoe UI', sans-serif;
       margin: 0;
-      padding: 0;
-      background-color: #222;
-      overflow: hidden;
-      touch-action: none;
-      font-family: Arial, sans-serif;
+      background: #121420;
+      color: #e0e0e0;
     }
-    
-    #game-container {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      background-color: #1a331a;
-      background-image: 
-        linear-gradient(#1a331a 1px, transparent 1px),
-        linear-gradient(90deg, #1a331a 1px, transparent 1px);
-      background-size: 50px 50px;
-      overflow: hidden;
-    }
-    
-    #player {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle cx="20" cy="15" r="10" fill="%23ffdbac"/><rect x="10" y="25" width="20" height="15" fill="%23336699"/><rect x="15" y="40" width="10" height="5" fill="%23552d00"/><rect x="5" y="30" width="8" height="15" fill="%23336699"/><rect x="27" y="30" width="8" height="15" fill="%23336699"/></svg>');
-      background-size: contain;
-      z-index: 10;
-      transition: transform 0.1s linear;
-    }
-    
-    .enemy {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle cx="20" cy="15" r="10" fill="%23ff9999"/><rect x="10" y="25" width="20" height="15" fill="%23993333"/><rect x="15" y="40" width="10" height="5" fill="%23552d00"/><rect x="5" y="30" width="8" height="15" fill="%23993333"/><rect x="27" y="30" width="8" height="15" fill="%23993333"/></svg>');
-      background-size: contain;
-      z-index: 5;
-    }
-    
-    .bullet {
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      background-color: yellow;
-      border-radius: 50%;
-      z-index: 8;
-    }
-    
-    .health-bar {
-      position: absolute;
-      width: 30px;
-      height: 4px;
-      background-color: red;
-      top: -8px;
-      left: 5px;
-      z-index: 15;
-    }
-    
-    .health-fill {
-      height: 100%;
-      background-color: limegreen;
-    }
-    
-    #joystick-area {
-      position: absolute;
-      width: 150px;
-      height: 150px;
-      bottom: 30px;
-      left: 30px;
-      background-color: rgba(0,0,0,0.3);
-      border-radius: 50%;
-      z-index: 20;
-    }
-    
-    #joystick {
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      background-color: rgba(255,255,255,0.5);
-      border-radius: 50%;
-      top: 45px;
-      left: 45px;
-      touch-action: none;
-    }
-    
-    #shoot-button {
-      position: absolute;
-      width: 80px;
-      height: 80px;
-      background-color: rgba(255,0,0,0.5);
-      border-radius: 50%;
-      bottom: 40px;
-      right: 40px;
-      z-index: 20;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: bold;
-      font-size: 18px;
-    }
-    
-    #stats {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      color: white;
-      z-index: 20;
-      background-color: rgba(0,0,0,0.5);
-      padding: 10px;
-      border-radius: 5px;
-    }
-    
-    #game-over {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.8);
-      display: none;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 100;
-      color: white;
-    }
-    
-    #game-over h2 {
-      font-size: 36px;
-      color: red;
-      margin-bottom: 20px;
-    }
-    
-    #restart-btn {
-      padding: 10px 20px;
-      background-color: #4CAF50;
-      border: none;
-      border-radius: 5px;
-      color: white;
-      font-size: 18px;
-      cursor: pointer;
-    }
-    
-    #skill-buttons {
-      position: absolute;
-      bottom: 30px;
-      right: 140px;
+
+    #toolbar {
+      padding: 12px;
+      background: #1a1a2e;
       display: flex;
       gap: 10px;
-      z-index: 20;
-    }
-    
-    .skill-btn {
-      width: 60px;
-      height: 60px;
-      background-color: rgba(0,100,255,0.5);
-      border-radius: 50%;
-      display: flex;
       align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: bold;
     }
-    
-    .cooldown {
-      position: absolute;
-      top: 0;
-      left: 0;
+
+    #address-bar {
+      flex-grow: 1;
+      padding: 8px 12px;
+      border-radius: 20px;
+      border: none;
+      background: #2a2a3a;
+      color: white;
+    }
+
+    button {
+      padding: 8px 16px;
+      border-radius: 20px;
+      background: #4d90fe;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    #webview {
       width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.7);
-      border-radius: 50%;
-      display: none;
+      height: calc(100vh - 52px);
+      border: none;
+    }
+
+    @media (max-width: 600px) {
+      button {
+        padding: 6px 12px;
+        font-size: 14px;
+      }
+
+      #address-bar {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
 <body>
-  <div id="game-container">
-    <div id="player">
-      <div class="health-bar">
-        <div class="health-fill" id="player-health"></div>
-      </div>
-    </div>
-    <!-- Musuh dan peluru akan ditambahkan secara dinamis -->
-    
-    <div id="joystick-area">
-      <div id="joystick"></div>
-    </div>
-    
-    <div id="shoot-button">TEMBAK</div>
-    
-    <div id="skill-buttons">
-      <div class="skill-btn" id="skill1">
-        Skill 1
-        <div class="cooldown" id="cooldown1"></div>
-      </div>
-      <div class="skill-btn" id="skill2">
-        Skill 2
-        <div class="cooldown" id="cooldown2"></div>
-      </div>
-    </div>
-    
-    <div id="stats">
-      <div>Kill: <span id="kill-count">0</span></div>
-      <div>HP: <span id="hp-text">100/100</span></div>
-      <div>Ammo: <span id="ammo-text">30/30</span></div>
-    </div>
-    
-    <div id="game-over">
-      <h2>GAME OVER</h2>
-      <p>Total Kill: <span id="final-kills">0</span></p>
-      <button id="restart-btn">Main Lagi</button>
-    </div>
+  <div id="toolbar">
+    <button id="back-btn">←</button>
+    <button id="forward-btn">→</button>
+    <input id="address-bar" type="text" placeholder="Enter URL..." value="https://etherscan.io">
+    <button id="go-btn">Go</button>
   </div>
 
+  <iframe id="webview" src="https://etherscan.io" sandbox="allow-scripts allow-forms allow-same-origin"></iframe>
+
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
   <script>
-    // Game state
-    const gameState = {
-      player: {
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2,
-        speed: 5,
-        maxHp: 100,
-        hp: 100,
-        ammo: 30,
-        maxAmmo: 30,
-        reloading: false,
-        kills: 0,
-        direction: { x: 0, y: 1 } // Arah awal menghadap ke bawah
-      },
-      enemies: [],
-      bullets: [],
-      enemyBullets: [],
-      joystickActive: false,
-      joystickAngle: 0,
-      gameOver: false,
-      lastEnemySpawn: 0,
-      lastShot: 0,
-      shootInterval: 200, // ms antara tembakan
-      skill1Cooldown: false,
-      skill2Cooldown: false
+    const addressBar = document.getElementById('address-bar');
+    const webview = document.getElementById('webview');
+
+    const loadURL = () => {
+      let url = addressBar.value.trim();
+      if (!url) return;
+
+      try {
+        const validURL = new URL(url.startsWith('http') ? url : 'https://' + url);
+        webview.src = validURL.href;
+      } catch (e) {
+        alert("URL tidak valid");
+      }
     };
 
-    // DOM elements
-    const playerElement = document.getElementById('player');
-    const gameContainer = document.getElementById('game-container');
-    const joystick = document.getElementById('joystick');
-    const joystickArea = document.getElementById('joystick-area');
-    const shootButton = document.getElementById('shoot-button');
-    const hpText = document.getElementById('hp-text');
-    const ammoText = document.getElementById('ammo-text');
-    const killCount = document.getElementById('kill-count');
-    const playerHealth = document.getElementById('player-health');
-    const gameOverScreen = document.getElementById('game-over');
-    const finalKills = document.getElementById('final-kills');
-    const restartBtn = document.getElementById('restart-btn');
-    const skill1Btn = document.getElementById('skill1');
-    const skill2Btn = document.getElementById('skill2');
-    const cooldown1 = document.getElementById('cooldown1');
-    const cooldown2 = document.getElementById('cooldown2');
+    document.getElementById('go-btn').addEventListener('click', loadURL);
+    addressBar.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') loadURL();
+    });
 
-    // Initialize game
-    function initGame() {
-      // Reset player
-      gameState.player.x = window.innerWidth / 2;
-      gameState.player.y = window.innerHeight / 2;
-      gameState.player.hp = gameState.player.maxHp;
-      gameState.player.ammo = gameState.player.maxAmmo;
-      gameState.player.kills = 0;
-      gameState.player.reloading = false;
-      gameState.gameOver = false;
-      
-      // Clear enemies and bullets
-      gameState.enemies = [];
-      gameState.bullets = [];
-      gameState.enemyBullets = [];
-      
-      // Clear DOM elements
-      document.querySelectorAll('.enemy, .bullet').forEach(el => el.remove());
-      
-      // Update UI
-      updatePlayerPosition();
-      updateStats();
-      
-      // Hide game over screen
-      gameOverScreen.style.display = 'none';
-      
-      // Start game loop
-      gameLoop();
-    }
+    // Back/forward tidak berfungsi dalam iframe
+    document.getElementById('back-btn').addEventListener('click', () => {
+      alert("Fitur back tidak didukung iframe, gunakan WebView/Electron untuk fitur penuh.");
+    });
 
-    // Update player position
-    function updatePlayerPosition() {
-      playerElement.style.left = `${gameState.player.x - 20}px`;
-      playerElement.style.top = `${gameState.player.y - 20}px`;
-      
-      // Update health bar
-      const healthPercent = (gameState.player.hp / gameState.player.maxHp) * 100;
-      playerHealth.style.width = `${healthPercent}%`;
-    }
+    document.getElementById('forward-btn').addEventListener('click', () => {
+      alert("Fitur forward tidak didukung iframe.");
+    });
 
-    // Update stats display
-    function updateStats() {
-      hpText.textContent = `${gameState.player.hp}/${gameState.player.maxHp}`;
-      ammoText.textContent = `${gameState.player.ammo}/${gameState.player.maxAmmo}`;
-      killCount.textContent = gameState.player.kills;
-    }
-
-    // Spawn enemy
-    function spawnEnemy() {
-      const edge = Math.floor(Math.random() * 4); // 0: top, 1: right, 2: bottom, 3: left
-      let x, y;
-      
-      switch(edge) {
-        case 0: // top
-          x = Math.random() * window.innerWidth;
-          y = -40;
-          break;
-        case 1: // right
-          x = window.innerWidth + 40;
-          y = Math.random() * window.innerHeight;
-          break;
-        case 2: // bottom
-          x = Math.random() * window.innerWidth;
-          y = window.innerHeight + 40;
-          break;
-        case 3: // left
-          x = -40;
-          y = Math.random() * window.innerHeight;
-          break;
-      }
-      
-      const enemy = {
-        id: `enemy-${Date.now()}`,
-        x,
-        y,
-        speed: 1 + Math.random() * 2,
-        maxHp: 30,
-        hp: 30,
-        attack: 10,
-        lastShot: 0,
-        shootInterval: 1000 + Math.random() * 1000
-      };
-      
-      gameState.enemies.push(enemy);
-      
-      // Create enemy element
-      const enemyElement = document.createElement('div');
-      enemyElement.className = 'enemy';
-      enemyElement.id = enemy.id;
-      enemyElement.style.left = `${enemy.x - 20}px`;
-      enemyElement.style.top = `${enemy.y - 20}px`;
-      
-      // Add health bar
-      const healthBar = document.createElement('div');
-      healthBar.className = 'health-bar';
-      const healthFill = document.createElement('div');
-      healthFill.className = 'health-fill';
-      healthFill.style.width = '100%';
-      healthBar.appendChild(healthFill);
-      enemyElement.appendChild(healthBar);
-      
-      gameContainer.appendChild(enemyElement);
-    }
-
-    // Move enemies
-    function moveEnemies() {
-      gameState.enemies.forEach(enemy => {
-        // Calculate direction to player
-        const dx = gameState.player.x - enemy.x;
-        const dy = gameState.player.y - enemy.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        // Normalize direction
-        const dirX = dx / distance;
-        const dirY = dy / distance;
-        
-        // Move enemy
-        enemy.x += dirX * enemy.speed;
-        enemy.y += dirY * enemy.speed;
-        
-        // Update DOM position
-        const enemyElement = document.getElementById(enemy.id);
-        if (enemyElement) {
-          enemyElement.style.left = `${enemy.x - 20}px`;
-          enemyElement.style.top = `${enemy.y - 20}px`;
-        }
-        
-        // Enemy shooting
-        const now = Date.now();
-        if (now - enemy.lastShot > enemy.shootInterval && distance < 300) {
-          enemy.lastShot = now;
-          shootEnemyBullet(enemy);
-        }
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').then(() => {
+        console.log('Service Worker registered');
       });
     }
-
-    // Player shoot
-    function shoot() {
-      const now = Date.now();
-      if (now - gameState.lastShot < gameState.shootInterval || gameState.player.ammo <= 0) {
-        return;
-      }
-      
-      if (gameState.player.ammo <= 0 && !gameState.player.reloading) {
-        reload();
-        return;
-      }
-      
-      gameState.lastShot = now;
-      gameState.player.ammo--;
-      updateStats();
-      
-      // Create bullet
-      const bullet = {
-        id: `bullet-${Date.now()}`,
-        x: gameState.player.x,
-        y: gameState.player.y,
-        speed: 10,
-        direction: { ...gameState.player.direction }
-      };
-      
-      gameState.bullets.push(bullet);
-      
-      // Create bullet element
-      const bulletElement = document.createElement('div');
-      bulletElement.className = 'bullet';
-      bulletElement.id = bullet.id;
-      bulletElement.style.left = `${bullet.x - 5}px`;
-      bulletElement.style.top = `${bullet.y - 5}px`;
-      gameContainer.appendChild(bulletElement);
-    }
-
-    // Enemy shoot
-    function shootEnemyBullet(enemy) {
-      // Calculate direction to player
-      const dx = gameState.player.x - enemy.x;
-      const dy = gameState.player.y - enemy.y;
-      const distance = Math.sqrt(dx * dx + dy * dy);
-      
-      // Normalize direction
-      const dirX = dx / distance;
-      const dirY = dy / distance;
-      
-      // Create bullet
-      const bullet = {
-        id: `enemy-bullet-${Date.now()}`,
-        x: enemy.x,
-        y: enemy.y,
-        speed: 5,
-        direction: { x: dirX, y: dirY }
-      };
-      
-      gameState.enemyBullets.push(bullet);
-      
-      // Create bullet element
-      const bulletElement = document.createElement('div');
-      bulletElement.className = 'bullet';
-      bulletElement.style.backgroundColor = 'red';
-      bulletElement.id = bullet.id;
-      bulletElement.style.left = `${bullet.x - 5}px`;
-      bulletElement.style.top = `${bullet.y - 5}px`;
-      gameContainer.appendChild(bulletElement);
-    }
-
-    // Reload
-    function reload() {
-      if (gameState.player.reloading || gameState.player.ammo === gameState.player.maxAmmo) {
-        return;
-      }
-      
-      gameState.player.reloading = true;
-      ammoText.textContent = "Reloading...";
-      
-      setTimeout(() => {
-        gameState.player.ammo = gameState.player.maxAmmo;
-        gameState.player.reloading = false;
-        updateStats();
-      }, 1000);
-    }
-
-    // Move bullets
-    function moveBullets() {
-      // Player bullets
-      gameState.bullets.forEach(bullet => {
-        bullet.x += bullet.direction.x * bullet.speed;
-        bullet.y += bullet.direction.y * bullet.speed;
-        
-        const bulletElement = document.getElementById(bullet.id);
-        if (bulletElement) {
-          bulletElement.style.left = `${bullet.x - 5}px`;
-          bulletElement.style.top = `${bullet.y - 5}px`;
-        }
-        
-        // Check collision with enemies
-        checkBulletCollision(bullet);
-        
-        // Remove if out of screen
-        if (bullet.x < 0 || bullet.x > window.innerWidth || 
-            bullet.y < 0 || bullet.y > window.innerHeight) {
-          removeBullet(bullet.id);
-        }
-      });
-      
-      // Enemy bullets
-      gameState.enemyBullets.forEach(bullet => {
-        bullet.x += bullet.direction.x * bullet.speed;
-        bullet.y += bullet.direction.y * bullet.speed;
-        
-        const bulletElement = document.getElementById(bullet.id);
-        if (bulletElement) {
-          bulletElement.style.left = `${bullet.x - 5}px`;
-          bulletElement.style.top = `${bullet.y - 5}px`;
-        }
-        
-        // Check collision with player
-        checkEnemyBulletCollision(bullet);
-        
-        // Remove if out of screen
-        if (bullet.x < 0 || bullet.x > window.innerWidth || 
-            bullet.y < 0 || bullet.y > window.innerHeight) {
-          removeEnemyBullet(bullet.id);
-        }
-      });
-    }
-
-    // Check bullet collision with enemies
-    function checkBulletCollision(bullet) {
-      for (let i = 0; i < gameState.enemies.length; i++) {
-        const enemy = gameState.enemies[i];
-        const distance = Math.sqrt(
-          Math.pow(bullet.x - enemy.x, 2) + 
-          Math.pow(bullet.y - enemy.y, 2)
-        );
-        
-        if (distance < 25) { // Jika mengenai musuh
-          enemy.hp -= 10;
-          
-          // Update enemy health bar
-          const enemyElement = document.getElementById(enemy.id);
-          if (enemyElement) {
-            const healthFill = enemyElement.querySelector('.health-fill');
-            if (healthFill) {
-              const healthPercent = (enemy.hp / enemy.maxHp) * 100;
-              healthFill.style.width = `${healthPercent}%`;
-            }
-          }
-          
-          // Jika musuh mati
-          if (enemy.hp <= 0) {
-            gameState.player.kills++;
-            updateStats();
-            
-            // Hapus musuh
-            document.getElementById(enemy.id)?.remove();
-            gameState.enemies.splice(i, 1);
-          }
-          
-          // Hapus peluru
-          removeBullet(bullet.id);
-          break;
-        }
-      }
-    }
-
-    // Check enemy bullet collision with player
-    function checkEnemyBulletCollision(bullet) {
-      const distance = Math.sqrt(
-        Math.pow(bullet.x - gameState.player.x, 2) + 
-        Math.pow(bullet.y - gameState.player.y, 2)
-      );
-      
-      if (distance < 25) { // Jika mengenai player
-        gameState.player.hp -= 10;
-        updateStats();
-        removeEnemyBullet(bullet.id);
-        
-        // Cek game over
-        if (gameState.player.hp <= 0) {
-          gameOver();
-        }
-      }
-    }
-
-    // Remove bullet
-    function removeBullet(id) {
-      document.getElementById(id)?.remove();
-      gameState.bullets = gameState.bullets.filter(b => b.id !== id);
-    }
-
-    // Remove enemy bullet
-    function removeEnemyBullet(id) {
-      document.getElementById(id)?.remove();
-      gameState.enemyBullets = gameState.enemyBullets.filter(b => b.id !== id);
-    }
-
-    // Skill 1 - Bomb (Area damage)
-    function useSkill1() {
-      if (gameState.skill1Cooldown) return;
-      
-      gameState.skill1Cooldown = true;
-      cooldown1.style.display = 'block';
-      
-      // Buat efek ledakan
-      const explosion = document.createElement('div');
-      explosion.style.position = 'absolute';
-      explosion.style.width = '100px';
-      explosion.style.height = '100px';
-      explosion.style.borderRadius = '50%';
-      explosion.style.backgroundColor = 'rgba(255, 200, 0, 0.5)';
-      explosion.style.left = `${gameState.player.x - 50}px`;
-      explosion.style.top = `${gameState.player.y - 50}px`;
-      explosion.style.zIndex = '9';
-      gameContainer.appendChild(explosion);
-      
-      // Animasi ledakan
-      let size = 100;
-      const grow = setInterval(() => {
-        size += 10;
-        explosion.style.width = `${size}px`;
-        explosion.style.height = `${size}px`;
-        explosion.style.left = `${gameState.player.x - size/2}px`;
-        explosion.style.top = `${gameState.player.y - size/2}px`;
-        explosion.style.opacity = (200 - size) / 100;
-        
-        if (size >= 200) {
-          clearInterval(grow);
-          explosion.remove();
-        }
-      }, 30);
-      
-      // Damage musuh dalam radius
-      gameState.enemies.forEach(enemy => {
-        const distance = Math.sqrt(
-          Math.pow(enemy.x - gameState.player.x, 2) + 
-          Math.pow(enemy.y - gameState.player.y, 2)
-        );
-        
-        if (distance < 100) {
-          enemy.hp -= 30;
-          
-          const enemyElement = document.getElementById(enemy.id);
-          if (enemyElement) {
-            const healthFill = enemyElement.querySelector('.health-fill');
-            if (healthFill) {
-              const healthPercent = (enemy.hp / enemy.maxHp) * 100;
-              healthFill.style.width = `${healthPercent}%`;
-            }
-          }
-          
-          if (enemy.hp <= 0) {
-            gameState.player.kills++;
-            document.getElementById(enemy.id)?.remove();
-            gameState.enemies = gameState.enemies.filter(e => e.id !== enemy.id);
-          }
-        }
-      });
-      
-      updateStats();
-      
-      // Cooldown
-      setTimeout(() => {
-        gameState.skill1Cooldown = false;
-        cooldown1.style.display = 'none';
-      }, 5000);
-    }
-
-    // Skill 2 - Heal
-    function useSkill2() {
-      if (gameState.skill2Cooldown || gameState.player.hp >= gameState.player.maxHp) return;
-      
-      gameState.skill2Cooldown = true;
-      cooldown2.st
+  </script>
+</body>
+</html>
